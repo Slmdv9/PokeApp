@@ -10,11 +10,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
+import com.leiva.pokeapp.data.RetrofitServiceFactory
 import com.leiva.pokeapp.ui.theme.PokeAppTheme
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val service = RetrofitServiceFactory.makeRetrofitService()
+
+        lifecycleScope.launch {
+            val species = service.getPokemonSpecies("1")
+            println(species)
+        }
+
         setContent {
             PokeAppTheme {
                 // A surface container using the 'background' color from the theme
